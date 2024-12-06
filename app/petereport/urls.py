@@ -14,6 +14,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('martor/', include('martor.urls')),
     path('api/uploader/', markdown_uploader, name='markdown_uploader'),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 urlpatterns += i18n_patterns(
