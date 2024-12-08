@@ -1,271 +1,373 @@
 {% load i18n%}
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+<div class="flex flex-col justify-between h-full">
+  <div
+    class="max-h-[calc(100vh-10rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+  >
+    <div class="">
+      <div class="">
+        <a href="/">
+          <div
+            class="place-self-center  font-semibold font-poppins text-gray-800"
+          >
+            {% translate "Dashboard" %}
+        </div>
+        </a>
+      </div>
 
-    <a href="/" class="brand-link">
-<img src="{{company_picture.url}}" alt="{{company_name}} Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">{{company_name}}</span>
-    </a>
+      {% comment %} Confugrations {% endcomment %} 
+      {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+      <div>
+        <!-- Main Heading -->
+        <div
+          id="configToggle"
+          class="font-medium text-nowrap font-poppins text-sm cursor-pointer p-2 rounded-lg hover:text-slate-100 flex items-center justify-between hover:bg-indigo-600"
+        >
+          <div>
+            <i class="fas fa-cogs"></i>
+            <!-- Font Awesome configuration (gear) icon -->
+            {% translate "Configuration" %}
+          </div>
+          <i
+            id="configIcon"
+            class="right fas fa-angle-left transition-transform duration-300"
+          ></i>
+        </div>
 
-    <div class="sidebar">
+        <!-- Submenus -->
+        <div
+          id="configMenu"
+          class="pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'user_list' %}" class="block">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-id-card"></i>
+              {% translate "Users" %}
+            </div>
+          </a>
+          <a href="{% url 'user_add' %}" class="block">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-users-cog"></i>
+              {% translate "Add User" %}
+            </div>
+          </a>
+          <a href="{% url 'settings' %}" class="block">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-cog"></i>
+              {% translate "Settings" %}
+            </div>
+          </a>
+        </div>
+      </div>
+      {% endif %} {% comment %} Customers {% endcomment %}
 
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
-            <a href="/" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt text-orange"></i>
-              <p>
-                {% translate "Dashboard" %}
-              </p>
-            </a>
-          </li>
+      <div>
+        <a href="{% url 'customer_list' %}">
+          <div
+            id="customerToggle"
+            class="font-medium text-nowrap font-poppins text-sm hover:bg-indigo-600 p-2 rounded-md text-gray-800 hover:text-slate-100 cursor-pointer flex items-center justify-between"
+          >
+          <div>
+          <i class="fas fa-building"></i>
+            {% translate "Customers" %}
+          </div>
+            <i
+              id="customerIcon"
+              class="fas fa-angle-left transition-transform duration-300"
+            ></i>
+          </div>
+        </a>
 
-  {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+        <div
+          id="customerMenu"
+          class="space-y-2 pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'customer_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="fas fa-table"></i>
+              {% translate "All Customers" %}
+            </div>
+          </a>
 
-          <li class="nav-item">
-            <a href="/" class="nav-link">
-              <i class="nav-icon fas fa-cogs text-white"></i>
-              <p>
-                {% translate "Configuration" %}
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
+          {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+          <a href="{% url 'customer_add' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-edit"></i>
+              {% translate "Add Customer" %}
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'user_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-id-card"></i>
-                  <p>{% translate "Users" %}</p>
-                </a>
-              </li>
-            </ul>
+      <div>
+        <a href="{% url 'product_list' %}">
+          <div
+            id="productToggle"
+            class="font-medium text-nowrap font-poppins text-sm hover:bg-indigo-600 p-2 rounded-md text-gray-800 hover:text-slate-100 cursor-pointer flex items-center justify-between"
+          >
+          <div class="">
+          <i class="fa fa-cube "></i>
+            {% translate "Products" %}
+          </div>
+            <i
+              id="productIcon"
+              class="right fas fa-angle-left transition-transform duration-300"
+            ></i>
+          </div>
+        </a>
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'user_add' %}" class="nav-link">
-                  <i class="nav-icon fas fa-users-cog"></i>
-                  <p>{% translate "Add User" %}</p>
-                </a>
-              </li>
-            </ul>
-            
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'settings' %}" class="nav-link">
-                  <i class="nav-icon fas fa-cog"></i>
-                  <p>{% translate "Settings" %}</p>
-                </a>
-              </li>
-            </ul>
+        <div
+          id="productMenu"
+          class="space-y-2 pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'product_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="fas fa-table"></i>
+              {% translate "All Products" %}
+            </div>
+          </a>
 
-          </li>
-  {% endif %}
+          {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+          <a href="{% url 'product_add' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-edit"></i>
+              {% translate "Add Product" %}
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
 
+      {% comment %} Reports {% endcomment %}
 
-          <li class="nav-item">
-            <a href="{% url 'customer_list' %}" class="nav-link">
-              <i class="nav-icon fas fa-building text-yellow"></i>
-              <p>
-                {% translate "Customers" %}
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
+      <div>
+        <a href="{% url 'report_list' %}">
+          <div
+            id="reportToggle"
+            class="font-medium text-nowrap font-poppins text-sm hover:bg-indigo-600 p-2 rounded-md text-gray-800 hover:text-slate-100 cursor-pointer flex items-center justify-between"
+          >
+          <div>
+          <i class="fas fa-copy"></i>
+            {% translate "Reports" %}
+          </div>
+            <i
+              id="reportIcon"
+              class="right fas fa-angle-left transition-transform duration-300"
+            ></i>
+          </div>
+        </a>
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'customer_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-table"></i>
-                  <p>{% translate "All Customers" %}</p>
-                </a>
-              </li>
-            </ul>
+        <div
+          id="reportMenu"
+          class="space-y-2 pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'report_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-table"></i>
+              {% translate "All Reports" %}
+            </div>
+          </a>
 
-        {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'customer_add' %}" class="nav-link">
-                  <i class="nav-icon fas fa-edit"></i>
-                  <p>{% translate "Add Customer" %}</p>
-                </a>
-              </li>
-            </ul>
-        {% endif %}
+          {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+          <a href="{% url 'report_add' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-edit"></i>
+              {% translate "Add Report" %}
+            </div>
+          </a>
+          {% endif %}
 
-          </li>
+          <a href="{% url 'deliverable_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-download"></i>
+              {% translate "All Deliverables" %}
+            </div>
+          </a>
+        </div>
+      </div>
 
-          
-          <li class="nav-item">
-            <a href="{% url 'product_list' %}" class="nav-link">
-              <i class="nav-icon fa fa-cube text-primary"></i>
-              <p>
-                {% translate "Products" %}
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
+      {% comment %} Findings {% endcomment %}
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'product_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-table"></i>
-                  <p>{% translate "All Products" %}</p>
-                </a>
-              </li>
-            </ul>
+      <div>
+        <a href="{% url 'openfindings' %}">
+          <div
+            id="findingsToggle"
+            class="font-medium text-nowrap font-poppins text-sm hover:bg-indigo-600 p-2 rounded-md text-gray-800 hover:text-slate-100 cursor-pointer flex items-center justify-between"
+          >
+          <div>
+          <i class="nav-icon fas fa-bug text-danger"></i>
+            {% translate "Findings" %}
+          </div>
+            <i
+              id="findingsIcon"
+              class="right fas fa-angle-left transition-transform duration-300"
+            ></i>
+          </div>
+        </a>
 
-        {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'product_add' %}" class="nav-link">
-                  <i class="nav-icon fas fa-edit"></i>
-                  <p>{% translate "Add Product" %}</p>
-                </a>
-              </li>
-            </ul>
-        {% endif %}
+        <div
+          id="findingsMenu"
+          class="space-y-2 pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'openfindings' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-exclamation-triangle"></i>
+              {% translate "Open Findings" %}
+            </div>
+          </a>
 
-          </li>
+          <a href="{% url 'closedfindings' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-toolbox"></i>
+              {% translate "Closed Findings" %}
+            </div>
+          </a>
 
+          <a href="{% url 'template_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="far fa-file-alt nav-icon"></i>
+              {% translate "Finding Templates" %}
+            </div>
+          </a>
 
-          <li class="nav-item">
-            <a href="{% url 'report_list' %}" class="nav-link">
-              <i class="nav-icon fas fa-copy text-success"></i>
-              <p>
-                {% translate "Reports" %}
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
+          {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+          <a href="{% url 'template_add' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="fas fa-file-code nav-icon"></i>
+              {% translate "Add Finding Template" %}
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'report_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-table"></i>
-                  <p>{% translate "All Reports" %}</p>
-                </a>
-              </li>
-            </ul>
+      {% comment %} CWE List {% endcomment %}
 
-        {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'report_add' %}" class="nav-link">
-                  <i class="nav-icon fas fa-edit"></i>
-                  <p>{% translate "Add Report" %}</p>
-                </a>
-              </li>
-            </ul>
-        {% endif %}
+      <div>
+        <a href="{% url 'cwe_list' %}">
+          <div
+            id="cweToggle"
+            class="font-medium text-nowrap font-poppins text-sm hover:bg-indigo-600 p-2 rounded-md text-gray-800 hover:text-slate-100 cursor-pointer flex items-center justify-between"
+          >
+          <div>
+          <i class=" fas fa-fingerprint"></i>
+            {% translate "CWE" %}
+          </div>
+            <i
+              id="cweIcon"
+              class="right fas fa-angle-left transition-transform duration-300"
+            ></i>
+          </div>
+        </a>
 
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'deliverable_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-download"></i>
-                  <p>
-                    {% translate "All Deliverables" %}
-                  </p>
-                </a>
-              </li>
-            </ul>
+        <div
+          id="cweMenu"
+          class="space-y-2 pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'cwe_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="fas fa-radiation-alt"></i>
+              {% translate "CWE List" %}
+            </div>
+          </a>
 
-          </li>
+          {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+          <a href="{% url 'cwe_add' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="fas fa-edit "></i>
+              {% translate "Add CWE" %}
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
 
+      {% comment %} OWASP {% endcomment %}
 
-          <li class="nav-item">
-            <a href="{% url 'openfindings' %}" class="nav-link">
-              <i class="nav-icon fas fa-bug text-danger"></i>
-              <p>
-                {% translate "Findings" %}
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'openfindings' %}" class="nav-link">
-                  <i class="nav-icon fas fa-exclamation-triangle"></i>
-                  <p>{% translate "Open Findings" %}</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'closedfindings' %}" class="nav-link">
-                  <i class="nav-icon fas fa-toolbox"></i>
-                  <p>{% translate "Closed Findings" %}</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'template_list' %}" class="nav-link">
-                  <i class="far fa-file-alt nav-icon"></i>
-                  <p>{% translate "Finding templates" %}</p>
-                </a>
-              </li>
+      <div>
+        <a href="{% url 'owasp_list' %}">
+          <div
+            id="owaspToggle"
+            class="font-medium text-nowrap font-poppins text-sm hover:bg-indigo-600 p-2 rounded-md text-gray-800 hover:text-slate-100 cursor-pointer flex items-center justify-between"
+          >
+          <div>
+            <i class="nav-icon fas fa-fingerprint text-info"></i>
+            {% translate "OWASP" %}
+          </div>
+            <i
+              id="owaspIcon"
+              class="right fas fa-angle-left transition-transform duration-300"
+            ></i>
+          </div>
+        </a>
 
-            {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-              <li class="nav-item">
-                <a href="{% url 'template_add' %}" class="nav-link">
-                  <i class="fas fa-file-code nav-icon"></i>
-                  <p>{% translate "Add Finding template" %}</p>
-                </a>
-              </li>
-            {% endif %}
+        <div
+          id="owaspMenu"
+          class="space-y-2 pl-4 max-h-0 overflow-hidden opacity-0 transition-all duration-500 ease-in-out border-l-indigo-600 border-l-2"
+        >
+          <a href="{% url 'owasp_list' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="nav-icon fas fa-radiation-alt"></i>
+              {% translate "OWASP List" %}
+            </div>
+          </a>
 
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a href="{% url 'cwe_list' %}" class="nav-link">
-              <i class="nav-icon fas fa-fingerprint text-warning"></i>
-              <p>
-                {% translate "CWE" %}
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'cwe_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-radiation-alt"></i>
-                  <p>{% translate "CWE List" %}</p>
-                </a>
-              </li>
-
-            {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-              <li class="nav-item">
-                <a href="{% url 'cwe_add' %}" class="nav-link">
-                  <i class="fas fa-edit nav-icon"></i>
-                  <p>{% translate "Add CWE" %}</p>
-                </a>
-              </li>
-            {% endif %}
-
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a href="{% url 'owasp_list' %}" class="nav-link">
-              <i class="nav-icon fas fa-fingerprint text-info"></i>
-              <p>
-                {% translate "OWASP" %}
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'owasp_list' %}" class="nav-link">
-                  <i class="nav-icon fas fa-radiation-alt"></i>
-                  <p>{% translate "OWASP List" %}</p>
-                </a>
-              </li>
-
-            {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-              <li class="nav-item">
-                <a href="{% url 'owasp_add' %}" class="nav-link">
-                  <i class="fas fa-edit nav-icon"></i>
-                  <p>{% translate "Add OWASP" %}</p>
-                </a>
-              </li>
-            {% endif %}
-
-            </ul>
-          </li>
-
-
-        </ul>
-      </nav>
+          {% if user.groups.all.0|stringformat:'s' == "administrator" %}
+          <a href="{% url 'owasp_add' %}">
+            <div
+              class="font-medium p-2 text-nowrap rounded-md font-poppins text-sm text-slate-600 hover:bg-indigo-500 hover:text-slate-50"
+            >
+            <i class="fas fa-edit nav-icon"></i>
+              {% translate "Add OWASP" %}
+            </div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
-  </aside>
+  </div>
+
+  <div class="mb-4 hover:bg-red-500 text-slate-800 hover:text-slate-100 border-2 p-2 rounded-md">
+    <i class="fas fa-power-off"></i>
+    <form id="logout-form" method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <a class="font-poppins font-medium text-sm text-slate-900" role="button" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
+        {% translate "Logout" %} {{request.user }} {% translate "session" %}
+      </a>
+    </form>
+  </div>
+</div>

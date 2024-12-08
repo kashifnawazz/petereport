@@ -18,7 +18,7 @@
         <div class="row mb-2">
 
           <div class="col-sm-6">
-            <h4>{{ DB_report_query.title | bleach}} - {{ DB_report_query.report_id | bleach}}</h4>
+            <h4 class="font-poppins">{{ DB_report_query.title | bleach}} - {{ DB_report_query.report_id | bleach}}</h4>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -31,535 +31,383 @@
         </div>
 
 
-         <br>
-
-        <div class="row">
-            <div class="col-md-5">
-              <a href="/report/findings/{{ DB_report_query.pk }}"><button type="button" class="btn btn-danger"><i class="fa fa-bug"></i> {% translate "Findings" %}</button></a>
-              <a href="/report/appendix/{{ DB_report_query.pk }}"><button type="button" class="btn btn-success"><i class="fa fa-folder"></i> {% translate "Appendix" %}</button></a>
-              <a href="/report/attackflow/{{ DB_report_query.pk }}"><button type="button" class="btn btn-warning"><i class="fa fa-sitemap"></i> {% translate "Attack Flows" %}</button></a>
-
-            </div>
-
-
-
-            <div class="col-md-7 text-right">
-
-              <div class="btn-group">
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-download"></i> {% translate "Markdown" %}</button>
-
-                  {% if 'markdown' in templates_directories %}
-                    <div class="dropdown-menu" style="">
-                      {% for template in templates_directories.markdown %}
-                        <button class="dropdown-item" onclick="SaveSummaryImage('Markdown', '{{template}}');">Template > {{ template }}</button>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-              </div>
-
-              <div class="btn-group">
-                <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-download"></i> {% translate "PDF" %}</button>
-
-                  {% if 'pdf' in templates_directories %}
-                    <div class="dropdown-menu" style="">
-                      {% for template in templates_directories.pdf %}
-                        <button class="dropdown-item" onclick="SaveSummaryImage('PDF', '{{template}}');">Template > {{ template }}</button>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-              </div>
-
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-download"></i> {% translate "HTML" %}</button>
-
-                  {% if 'html' in templates_directories %}
-                    <div class="dropdown-menu" style="">
-                      {% for template in templates_directories.html %}
-                        <a href="/report/download/html/{{template}}/{{ DB_report_query.pk }}"><button class="dropdown-item">Template > {{ template }}</button></a>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-              </div>
-
-              <div class="btn-group">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-download"></i> {% translate "Jupyter" %}</button>
-
-                  {% if 'jupyter' in templates_directories %}
-                    <div class="dropdown-menu" style="">
-                      {% for template in templates_directories.jupyter %}
-                        <a href="/report/download/jupyter/{{template}}/{{ DB_report_query.pk }}"><button class="dropdown-item">Template > {{ template }}</button></a>
-                      {% endfor %}
-                    </div>
-                  {% endif %}
-              </div>
-
-
-              <a href="/findings/csv/{{ DB_report_query.pk }}"><button type="button" class="btn btn-success"><i class="fa fa-download"></i> {% translate "CSV" %}</button></a>
-
-            </div>
+      <div class="flex gap-5 rounded-lg w-full bg-gray-50 p-2">
+        <div class="dropdown">
+          <!-- Dropdown Button -->
+          <div tabindex="0" role="button" class="font-poppins px-4 py-2 rounded-md border shadow-md bg-indigo-500 hover:bg-indigo-600 text-slate-50 m-1">
+            Actions
+          </div>
+          
+          <!-- Dropdown Menu -->
+          <ul tabindex="0" class="dropdown-content menu bg-gray-50 rounded-box z-[1] w-52 p-2 shadow">
+            <!-- Findings Button -->
+            <li>
+              <a href="/report/findings/{{ DB_report_query.pk }}">
+                <button type="button" class="px-4 py-2 rounded-md w-full font-poppins text-slate-800 ">
+                  <i class="fa fa-bug"></i> {% translate "Findings" %}
+                </button>
+              </a>
+            </li>
+        
+            <!-- Appendix Button -->
+            <li>
+              <a href="/report/appendix/{{ DB_report_query.pk }}">
+                <button type="button"  class="px-4 py-2 rounded-md w-full font-poppins text-slate-800 ">
+                  <i class="fa fa-folder"></i> {% translate "Appendix" %}
+                </button>
+              </a>
+            </li>
+        
+            <!-- Attack Flows Button -->
+            <li>
+              <a href="/report/attackflow/{{ DB_report_query.pk }}">
+                <button type="button"  class=" px-4 py-2 rounded-md w-full font-poppins text-slate-800">
+                  <i class="fa fa-sitemap"></i> {% translate "Attack Flows" %}
+                </button>
+              </a>
+            </li>
+          </ul>
         </div>
+        
 
-        <br>
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="font-poppins px-4 py-2 rounded-md border shadow-md bg-indigo-500 hover:bg-indigo-600 text-slate-50 m-1">
+            Export
+          </div>
+          <ul tabindex="0" class="dropdown-content menu bg-gray-50 rounded-box z-[1] w-52 p-2 shadow">
+            
+            <!-- Markdown Dropdown -->
+            <li class="dropdown-item">
+              <button type="button" class="px-4 py-2 rounded-md w-full font-poppins text-slate-800">
+                <i class="fa fa-download"></i> {% translate "Markdown" %}
+              </button>
+              {% if 'markdown' in templates_directories %}
+                <ul class="dropdown-menu bg-gray-100 p-2">
+                  {% for template in templates_directories.markdown %}
+                    <li><button class="dropdown-item w-full" onclick="SaveSummaryImage('Markdown', '{{template}}');">Template > {{ template }}</button></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+        
+            <!-- PDF Dropdown -->
+            <li class="dropdown-item">
+              <button type="button" class="px-4 py-2 rounded-md w-full font-poppins text-slate-800">
+                <i class="fa fa-download"></i> {% translate "PDF" %}
+              </button>
+              {% if 'pdf' in templates_directories %}
+                <ul class="dropdown-menu bg-gray-100 p-2">
+                  {% for template in templates_directories.pdf %}
+                    <li><button class="dropdown-item w-full" onclick="SaveSummaryImage('PDF', '{{template}}');">Template > {{ template }}</button></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+        
+            <!-- HTML Dropdown -->
+            <li class="dropdown-item">
+              <button type="button" class="px-4 py-2 rounded-md w-full font-poppins text-slate-800">
+                <i class="fa fa-download"></i> {% translate "HTML" %}
+              </button>
+              {% if 'html' in templates_directories %}
+                <ul class="dropdown-menu bg-gray-100 p-2">
+                  {% for template in templates_directories.html %}
+                    <li><a href="/report/download/html/{{template}}/{{ DB_report_query.pk }}" class="dropdown-item w-full">Template > {{ template }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+        
+            <!-- Jupyter Dropdown -->
+            <li class="dropdown-item">
+              <button type="button" class="px-4 py-2 rounded-md w-full font-poppins text-slate-800">
+                <i class="fa fa-download"></i> {% translate "Jupyter" %}
+              </button>
+              {% if 'jupyter' in templates_directories %}
+                <ul class="dropdown-menu bg-gray-100 p-2">
+                  {% for template in templates_directories.jupyter %}
+                    <li><a href="/report/download/jupyter/{{template}}/{{ DB_report_query.pk }}" class="dropdown-item w-full">Template > {{ template }}</a></li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </li>
+        
+            <!-- CSV Button -->
+            <li class="dropdown-item">
+              <a href="/findings/csv/{{ DB_report_query.pk }}">
+                <button type="button" class="px-4 py-2 rounded-md w-full font-poppins text-slate-800">
+                  <i class="fa fa-download"></i> {% translate "CSV" %}
+                </button>
+              </a>
+            </li>
+        
+          </ul>
+        </div>
+        
+      </div>
+
 
 
       </div>
     </section>
+
+    <div class="card m-2">
+    <div class="card-body">
+      <h2 class="card-title font-poppins">{% translate "Executive Summary" %}</h2>
+    <div class="flex gap-10 w-full justify-center items-center p-4">
+      <!-- Circular Card 1 -->
+     
+      <div class="w-32 h-32 text-primary-content rounded-full hover:shadow-xl shadow-md flex items-center justify-center bg-red-700">
+        <div class="flex flex-col">
+          {% if count_findings_critical > 0 %}
+          <h2 class="text-center text-lg font-bold font-poppins">{{count_findings_critical}}</h2>
+          <h2 class="text-center text-lg font-bold font-poppins">{% translate "Critical" %}</h2>
+          {% else %}
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{{count_findings_critical}}</h2>
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{% translate "Critical" %}</h2>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="w-32 h-32 text-primary-content rounded-full hover:shadow-xl shadow-md flex items-center justify-center bg-red-500">
+        <div class="flex flex-col">
+          {% if count_findings_high > 0 %}
+          <h2 class="text-center text-lg font-bold font-poppins">{{count_findings_high}}</h2>
+          <h2 class="text-center text-lg font-bold font-poppins">{% translate "High" %}</h2>
+          {% else %}
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{{count_findings_high}}</h2>
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{% translate "High" %}</h2>
+          {% endif %}
+        </div>
+
+      </div>
+      <div class="w-32 h-32 text-primary-content rounded-full hover:shadow-xl shadow-md flex items-center justify-center bg-orange-400">
+        <div class="flex flex-col">
+          {% if count_findings_medium > 0 %}
+          <h2 class="text-center text-lg text-slate-50 font-bold font-poppins">{{count_findings_medium}}</h2>
+          <h2 class="text-center text-lg  text-slate-50 font-bold font-poppins">{% translate "Medium" %}</h2>
+          {% else %}
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{{count_findings_medium}}</h2>
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{% translate "Medium" %}</h2>
+          {% endif %}
+        </div>
+
+      </div>
+      <div class="w-32 h-32 text-primary-content rounded-full hover:shadow-xl shadow-md flex items-center justify-center bg-green-500">
+        <div class="flex flex-col">
+          {% if count_findings_low > 0 %}
+          <h2 class="text-center text-lg font-bold font-poppins">{{count_findings_low}}</h2>
+          <h2 class="text-center text-lg font-bold font-poppins">{% translate "Low" %}</h2>
+          {% else %}
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{{count_findings_low}}</h2>
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{% translate "Low" %}</h2>
+          {% endif %}
+        </div>
+      </div>
+      <div class="w-32 h-32 text-primary-content rounded-full hover:shadow-xl shadow-md flex items-center justify-center bg-blue-500">
+        <div class="flex flex-col">
+          {% if count_findings_info > 0 %}
+          <h2 class="text-center text-lg font-bold font-poppins">{{count_findings_info}}</h2>
+          <h2 class="text-center text-lg font-bold font-poppins">{% translate "Info" %}</h2>
+          {% else %}
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{{count_findings_info}}</h2>
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{% translate "Info" %}</h2>
+          {% endif %}
+        </div>
+      </div>
+      <div class="w-32 h-32 text-primary-content rounded-full hover:shadow-xl shadow-md flex items-center justify-center bg-indigo-500">
+        <div class="flex flex-col">
+          {% if count_findings_none > 0 %}
+          <h2 class="text-center text-lg font-bold font-poppins">{{count_findings_none}}</h2>
+          <h2 class="text-center text-lg font-bold font-poppins">{% translate "None" %}</h2>
+          {% else %}
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{{count_findings_none}}</h2>
+          <h2 class="text-center text-lg text-slate-50 font-poppins">{% translate "None" %}</h2>
+          {% endif %}
+        </div>
+      </div>
+    
+    
+    
+   
+    </div> 
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-2">
+
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Creation date" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.creation_date|date:"Y-m-d H:i:s" | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Report date" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.report_date|date:"d-m-Y" | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Product" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.product.name | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Customer" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.product.customer.name | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Report" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.title | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Findings" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ count_finding_query | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Audit dates" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.audit_start|date:"d-m-Y" | safe | bleach}} → {{ DB_report_query.audit_end|date:"d-m-Y" | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="card rounded-lg bg-base-100 shadow-xl">
+        <div class="card-body shadow-md">
+          <div class="text-slate-500 font-poppins">{% translate "Report ID" %}</div>
+          <div class="flex justify-between">
+            <h2 class="card-title font-poppins">{{ DB_report_query.report_id | safe | bleach}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if DB_report_query.executive_summary %}
+    <div class="row">
+      <div class="col-md-12">
+          <div class="card card-outline">
+            <div class="card-body font-poppins p-4 text-base max-h-64 overflow-y-auto scrollbar-thin">
+              {{ DB_report_query.executive_summary | safe_markdown | bleach}}
+            </div>
+          </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  </div>
+
+  <div class="card m-2">
+    <div class="card-body">
+      <div class="card-title font-poppins font-bold">{% translate "Breakdown by Severity" %}</div>
+      <div id="SeveritybarChartEcharts" style="width:80%; height:500px;"></div>     
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2">
+    <div class="card m-2">
+      <div class="card-body">
+        <div class="card-title font-poppins font-bold">{% translate "Breakdown by CWE Categories" %}</div>
+        <div id="CWEPieChartEcharts" style="width:100%; min-width: 100%; height:400px;"></div>    
+      </div>
+    </div>
+    <div class="card m-2">
+      <div class="card-body">
+        <div class="card-title font-poppins font-bold">{% translate "Vulnerabilities by status" %}</div>
+        <div id="StatusPieDoughnutEcharts" style="width:100%; height:400px;"></div>   
+      </div>
+    </div>
+    <div class="card m-2">
+      <div class="card-body">
+        <div class="card-title font-poppins font-bold">{% translate "Breakdown by OWASP Top Ten Application Security Risks" %}</div>
+        <div id="OWASPPieChartEcharts" style="width:100%; height:400px;"></div>
+      </div>
+    </div>
+    <div class="card m-2">
+      <div class="card-body">
+        <div class="card-title font-poppins font-bold">{% translate "Vulnerabilities by severity" %}</div>
+        <div id="VulnPieDoughnutEcharts" style="width:100%; height:400px;"></div>
+      </div>
+    </div>
+  </div>
+
+
+
+    
 
 
 
     <section class="content">
       <div class="container-fluid">
 
-
-      <div class="row">
-        <div class="col-md-12">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="far fa-chart-bar"></i>
-                    <b>{% translate "Executive Summary" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-
-                <div class="card-body">
-
-                      <div class="row">
-
-                        <div class="col-2 text-center">
-
-                            {% if count_findings_critical > 0 %}
-                              <input type="text" value="{{count_findings_critical}}" class="dial" data-min="0" data-max="{{count_findings_critical}}" data-fgColor="#cc0000" data-readOnly=true data-width="60%">
-                            {% else %}
-                              <input type="text" value="{{count_findings_critical}}" class="dial" data-min="0" data-max="{{count_findings_critical}}" data-fgColor="#D3D3D3" data-readOnly=true data-width="60%">
-                            {% endif %}
-
-                        <h3>{% translate "Critical" %}</h3>
-
-                        </div>
-
-                        <div class="col-2 text-center">
-
-                            {% if count_findings_high > 0 %}
-                              <input type="text" value="{{count_findings_high}}" class="dial" data-min="0" data-max="{{count_findings_high}}" data-fgColor="#f50000" data-readOnly=true data-width="60%">
-                            {% else %}
-                              <input type="text" value="{{count_findings_high}}" class="dial" data-min="0" data-max="{{count_findings_high}}" data-fgColor="#D3D3D3" data-readOnly=true data-width="60%">
-                            {% endif %}
-
-                        <h3>{% translate "High" %}</h3>
-                        </div>
-
-
-                        <div class="col-2 text-center">
-
-                            {% if count_findings_medium > 0 %}
-                              <input type="text" value="{{count_findings_medium}}" class="dial" data-min="0" data-max="{{count_findings_medium}}" data-fgColor="#fc7f03" data-readOnly=true data-width="60%">
-                            {% else %}
-                              <input type="text" value="{{count_findings_medium}}" class="dial" data-min="0" data-max="{{count_findings_medium}}" data-fgColor="#D3D3D3" data-readOnly=true data-width="60%">
-                            {% endif %}
-
-                        <h3>{% translate "Medium" %}</h3>
-                        </div>
-
-                        <div class="col-2 text-center">
-
-                            {% if count_findings_low > 0 %}
-                              <input type="text" value="{{count_findings_low}}" class="dial" data-min="0" data-max="{{count_findings_low}}" data-fgColor="#05b04f" data-readOnly=true data-width="60%">
-                            {% else %}
-                              <input type="text" value="{{count_findings_low}}" class="dial" data-min="0" data-max="{{count_findings_low}}" data-fgColor="#D3D3D3" data-readOnly=true data-width="60%">
-                            {% endif %}
-
-                        <h3>{% translate "Low" %}</h3>
-                        </div>
-
-
-                        <div class="col-2 text-center">
-
-                            {% if count_findings_info > 0 %}
-                              <input type="text" value="{{count_findings_info}}" class="dial" data-min="0" data-max="{{count_findings_info}}" data-fgColor="#45a7f7" data-readOnly=true data-width="60%">
-                            {% else %}
-                              <input type="text" value="{{count_findings_info}}" class="dial" data-min="0" data-max="{{count_findings_info}}" data-fgColor="#D3D3D3" data-readOnly=true data-width="60%">
-                            {% endif %}
-
-                        <h3>{% translate "Info" %}</h3>
-                        </div>
-                      
-                        <div class="col-2 text-center">
-
-                            {% if count_findings_none > 0 %}
-                              <input type="text" value="{{count_findings_none}}" class="dial" data-min="0" data-max="{{count_findings_none}}" data-fgColor="#999999" data-readOnly=true data-width="60%">
-                            {% else %}
-                              <input type="text" value="{{count_findings_none}}" class="dial" data-min="0" data-max="{{count_findings_none}}" data-fgColor="#D3D3D3" data-readOnly=true data-width="60%">
-                            {% endif %}
-
-                        <h3>{% translate "None" %}</h3>
-                        </div>
-
-
-                      </div>
-
-        
-                  <hr>
-
-
-                  <div class="row">
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Creation date" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.creation_date|date:"Y-m-d H:i:s" | safe | bleach}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Report date" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.report_date|date:"d-m-Y" | safe | bleach}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Product" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.product.name | safe | bleach}}<span>
-                        </span></span></div>
-                      </div>
-                    </div>
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Customer" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.product.customer.name | safe | bleach}}<span>
-                        </span></span></div>
-                      </div>
-                    </div>
-
-                  </div>
-
-
-
-                  <div class="row">
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Report" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.title | safe | bleach}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Findings" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ count_finding_query | safe | bleach}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Audit dates" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.audit_start|date:"d-m-Y" | safe | bleach}} → {{ DB_report_query.audit_end|date:"d-m-Y" | safe | bleach}}<span>
-                        </span></span></div>
-                      </div>
-                    </div>
-                    <div class="col-8 col-sm-3">
-                      <div class="info-box bg-light">
-                        <div class="info-box-content">
-                          <span class="info-box-number text-center text-muted">{% translate "Report ID" %}</span>
-                          <span class="info-box-text text-center text-muted mb-0">{{ DB_report_query.report_id | safe | bleach}}<span>
-                        </span></span></div>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  {% if DB_report_query.executive_summary %}
-                  <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-outline">
-                          <div class="card-body">
-                            {{ DB_report_query.executive_summary | safe_markdown | bleach}}
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                  {% endif %}
-                    
-
-                </div>
-              </div>
-
-        </div>
-      </div>
-
-
-
-
-      <!-- ---------------------------------------- -->
-
-      <div class="row">
-        <div class="col-md-12">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <b>{% translate "Breakdown by Severity" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-                    
-                  <center>
-                    <div id="SeveritybarChartEcharts" style="width:80%; height:500px;"></div>      
-                  </center>
-
-                </div>
-              </div>
-
-        </div>
-
-      </div> 
-
-
-
-
-      <div class="row">
-        <div class="col-md-8">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-bar"></i>
-                    <b>{% translate "Breakdown by CWE Categories" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-                
-                  <center>
-                    <div id="CWEPieChartEcharts" style="width:100%; min-width: 100%; height:400px;"></div>
-                  </center>
-
-                </div>
-              </div>
-
-        </div>
-
-
-        <div class="col-md-4">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-bar"></i>
-                    <b>{% translate "Vulnerabilities by status" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-
-                <div class="card-body">
-                    <div id="StatusPieDoughnutEcharts" style="width:100%; height:400px;"></div>
-                </div>
-
-              </div>
-
-        </div>
-
-
-
-
-      </div> 
-
-      <div class="row">
-        <div class="col-md-8">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-bar"></i>
-                    <b>{% translate "Breakdown by OWASP Top Ten Application Security Risks" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-
-                  <center>
-                    <div id="OWASPPieChartEcharts" style="width:100%; height:400px;"></div>
-                  </center>
-
-                </div>
-              </div>
-
-        </div>
-
-
-        <div class="col-md-4">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-bar"></i>
-                    <b>{% translate "Vulnerabilities by severity" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-
-                <div class="card-body">
-                    <div id="VulnPieDoughnutEcharts" style="width:100%; height:400px;"></div>
-                </div>
-
-              </div>
-
-        </div>
-
-
-      </div>
+   
 
       <!-- ---------------------------------------- -->
 
 
       {% if DB_report_query.scope %}
-      <div class="row">
-        <div class="col-md-12">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <b>{% translate "Scope" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-
+        <div class="card">
+            <div class="card-body">
+                  <h3 class="card-title font-poppins">{% translate "Scope" %}</h3>
+                <div class="card-body font-poppins">
                   {{ DB_report_query.scope | safe_markdown | bleach}}
-
                 </div>
               </div>
-
         </div>
-      </div>
       {% endif %}
 
 
       {% if DB_report_query.outofscope %}
-      <div class="row">
-        <div class="col-md-12">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <b>{% translate "Out of Scope" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-
-                  {{ DB_report_query.outofscope | safe_markdown | bleach}}
-
-                </div>
-              </div>
-
-        </div>
-      </div>
+      <div class="card">
+        <div class="card-body">
+              <h3 class="card-title font-poppins">{% translate "Out of Scope" %}</h3>
+            <div class="card-body font-poppins">
+              {{ DB_report_query.outofscope | safe_markdown | bleach}}
+            </div>
+          </div>
+    </div>
       {% endif %}
 
 
       {% if DB_report_query.methodology %}
-      <div class="row">
-        <div class="col-md-12">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <b>{% translate "Methodology" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-
-                  {{ DB_report_query.methodology | safe_markdown | bleach}}
-
-                </div>
-              </div>
-
-        </div>
+      <div class="card">
+        <div class="card-body">
+              <h3 class="card-title font-poppins">{% translate "Methodology" %}</h3>
+            <div class="card-body font-poppins">
+              {{ DB_report_query.methodology | safe_markdown | bleach}}
+            </div>
+          </div>
       </div>
       {% endif %}
 
 
 
       {% if DB_report_query.recommendation %}
-      <div class="row">
-        <div class="col-md-12">
-
-            <div class="card card-outline card-success">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <b>{% translate "Recommendation" %}</b>
-                  </h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-                <div class="card-body">
-
-                  {{ DB_report_query.recommendation | safe_markdown | bleach}}
-
-                </div>
-              </div>
-        </div>
+      <div class="card">
+        <div class="card-body">
+              <h3 class="card-title font-poppins">{% translate "Recommendation" %}</h3>
+            <div class="card-body font-poppins">
+              {{ DB_report_query.recommendation | safe_markdown | bleach}}
+            </div>
+          </div>
       </div>
       {% endif %}
 
@@ -584,7 +432,7 @@
                 </div>
                 <div class="card-body">
                     
-                     <div class="row">
+                    <div class="row">
                       <div class="col-md-12">
 
                       {% if count_finding_query == 0 %}
@@ -617,7 +465,6 @@
                                     {{ finding.status | safe_markdown | bleach}}
                                   </td>
                                   <td>
-                                                                      
                                         {% if finding.severity == "Critical" %}
                                             <b><font color="#CC0000">{{ finding.severity }}</font></b>
                                         {% elif finding.severity == "High" %}
@@ -933,7 +780,7 @@
 
 
 
-<div class="row">
+      <div class="row">
         <div class="col-md-12">
 
             <div class="card card-outline card-info">
@@ -1031,6 +878,8 @@
 
 
 {% endblock content %}
+
+
 
 {% block javascripts %}
   {{ block.super }}
@@ -1300,9 +1149,6 @@
   chart_OWASP.setOption(option_OWASP);
 
 </script>
-
-
-
 
 
 <script>

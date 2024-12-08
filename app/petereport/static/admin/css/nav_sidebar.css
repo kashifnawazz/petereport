@@ -1,4 +1,4 @@
-.sticky {
+/* .sticky {
     position: sticky;
     top: 0;
     max-height: 100vh;
@@ -117,4 +117,4 @@
     .main.shifted > #nav-sidebar + .content {
         max-width: 100%;
     }
-}
+} */

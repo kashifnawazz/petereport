@@ -1,58 +1,71 @@
 {% load i18n %}   
   {% if user.groups.all.0|stringformat:'s' == "administrator" %}
-    <nav class="main-header navbar navbar-expand navbar-orange navbar-light">
+    <div class=" flex flex-row h-full bg-indigo-600 justify-between">
   {% else %}
-    <nav class="main-header navbar navbar-expand navbar-green navbar-light">
+    <div class="flex flex-row h-full bg-indigo-600 justify-between">
   {% endif %}
 
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
+    <div class="flex place-items-center mx-10">
 
-    <ul class="navbar-nav ml-auto">
+      <a href="/" class=" p-2 h-fit flex gap-4">
+        {% comment %} <img src="{{company_picture.url}}" class="w-8 h-8" alt="{{company_name}} Logo" /> {% endcomment %}
+        <span class="font-poppins font-medium text-lg text-slate-800">{{company_name}}</span>
+      </a>
 
-      <li class="nav-item">
+      <div class="flex items-center">
+        <button
+          id="toggleSidebar"
+          class="text-slate-800 hover:text-gray-700 focus:outline-none mr-4"
+        >
+          <i class="fas fa-bars"></i> <!-- Icon for toggling -->
+        </button>
+      </div>
+    </div>
 
+
+    <div class="dropdown dropdown-bottom mr-56 flex">
       {% get_current_language as CURRENT_LANGUAGE %}
       {% get_available_languages as AVAILABLE_LANGUAGES %}
       {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
-
-      <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-      <i class="fa fa-flag"></i>
-      {% translate "Language" %}
-      </a>
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-
-      <span class="dropdown-item dropdown-header">{% translate "Current Language" %} {{ CURRENT_LANGUAGE }}</span>
-
-      {% for language in languages %}
-        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-          <div class="dropdown-divider"></div>
-          <button type="Submit"  class="dropdown-item" value="{{ language.code }}" name="language">
-
-          <i class="fa fa-flag"></i> {{ language.name_translated }}
-          
-          {% if language.code == CURRENT_LANGUAGE %} 
-              <span class="float-right text-muted text-sm"><b>{{ language.code }}</b></span>
-          {% else %}
-              <span class="float-right text-muted text-sm">{{ language.code }}</span>
-          {% endif %}
-          </a>
-        </form>
-      {% endfor %}
-      </li>
-
-      <li class="nav-item">
-        <form id="logout-form" method="post" action="{% url 'logout' %}">
-          {% csrf_token %}
-          <a class="nav-link" role="button" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
-            <i class="fas fa-sign-out-alt"></i> {% translate "Logout" %} {{ request.user }} {% translate "session" %}
-          </a>
-        </form>
-      </li>
-  
-    </ul>
-
-  </nav>
+      <!-- Dropdown Trigger -->
+      <div tabindex="0" role="button" class=" m-1 flex items-center">
+        <!-- Rounded Chinese Language Symbol -->
+        <div class="w-8 h-8 flex items-center justify-center bg-blue-500 text-white rounded-full mr-2 hover:text-slate-50">
+          <!-- Embedding the SVG -->
+          <svg fill="#000000" width="20px" height="20px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><title>ionicons-v5-l</title><path d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"/><path d="M272,320c-.25-.19-20.59-15.77-45.42-42.67,39.58-53.64,62-114.61,71.15-143.33H352V90H214V48H170V90H32v44H251.25c-9.52,26.95-27.05,69.5-53.79,108.36-32.68-43.44-47.14-75.88-47.33-76.22L143,152l-38,22,6.87,13.86c.89,1.56,17.19,37.9,54.71,86.57.92,1.21,1.85,2.39,2.78,3.57-49.72,56.86-89.15,79.09-89.66,79.47L64,368l23,36,19.3-11.47c2.2-1.67,41.33-24,92-80.78,24.52,26.28,43.22,40.83,44.3,41.67L255,362Z"/></svg>
+        </div>
+      </div>
+      <!-- Dropdown Menu -->
+      <ul tabindex="0" class="dropdown-content menu bg-slate-100 shadow-lg rounded-box z-[1] w-52 p-2">
+        <li class="font-poppins text-slate-800 p-2">
+          <span class="block font-semibold">
+            {% translate "Current Language" %}: <b>{{ CURRENT_LANGUAGE }}</b>
+          </span>
+        </li>
+        {% for language in languages %}
+        <li>
+          <form action="{% url 'set_language' %}" method="post" class="inline">
+            {% csrf_token %}
+            <button
+              type="submit"
+              class="hover:bg-indigo-600 p-2 rounded-md hover:text-slate-50 w-full text-left flex justify-between items-center font-poppins text-slate-800"
+              value="{{ language.code }}"
+              name="language"
+            >
+              <span>
+                <i class="fa fa-flag mr-2"></i>
+                {{ language.name_translated }}
+              </span>
+              {% if language.code == CURRENT_LANGUAGE %}
+              <span class="text-sm text-indigo-500"><b>{{ language.code }}</b></span>
+              {% else %}
+              <span class="text-sm text-slate-500">{{ language.code }}</span>
+              {% endif %}
+            </button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    
+  </div>

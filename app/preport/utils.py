@@ -3,7 +3,7 @@ from petereport.settings import MARTOR_UPLOAD_PATH, MARTOR_MEDIA_URL
 import re, os, base64, mimetypes
 from pathlib import Path
 
-local_media_file_regex = re.compile(r'.*\((' + MARTOR_UPLOAD_PATH + '.+\.(?:png|gif|jpg|jpeg))\).*')
+local_media_file_regex = re.compile(r'.*\((' + MARTOR_UPLOAD_PATH.replace('\\', '/') + r'.+\.(?:png|gif|jpg|jpeg))\).*')
 mimetypes.init()
 
 def replace_media_url_local_base64(markdown):

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+{% load static tailwind_tags %}
 <html lang="en">
 <head>
+  {% tailwind_css %}
     {% block head %}
       {% block meta %}
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,10 +18,10 @@
       {% block stylesheets %}
       
       <!-- Google Font: Source Sans Pro -->
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+      {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> {% endcomment %}
       <!-- Font Awesome -->
       <link rel="stylesheet" href="/static/plugins/fontawesome-free/css/all.min.css">
-
+      {% comment %} <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> {% endcomment %}
       <!-- DataTables -->
       <link rel="stylesheet" href="/static/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
       <link rel="stylesheet" href="/static/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -28,6 +30,7 @@
       <!-- Select2 -->
       <link rel="stylesheet" href="/static/plugins/select2/css/select2.min.css">
       <link rel="stylesheet" href="/static/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
 
       <!-- Theme style -->
       <link rel="stylesheet" href="/static/dist/css/highlighter.css">
@@ -46,49 +49,78 @@
 </head>
 
 
-<body class="hold-transition sidebar-mini">
-{% block body %}
+<body class=" bg-gray-200 flex flex-col">
+  {% block body %}
 
-<div class="wrapper">
-
-
+  <div class="flex flex-col">
+    <!-- Fixed Top Navigation -->
+    <header class="fixed top-0 left-0 h-16 right-0 bg-white border-b z-10">
       {% block top_navigation %}
-          {% include "home/top_navigation.html" %}
+        {% include "home/top_navigation.html" %}
       {% endblock top_navigation %}
-
-      {% block aside_navigation %}
+    </header>
+  
+    <!-- Main Content Area -->
+    <div class="flex flex-grow pt-16"> <!-- Add padding to offset the fixed header -->
+      <!-- Fixed Aside Navigation -->
+      <aside  id="sidebar" class="fixed left-0 w-64 h-[calc(100vh-3rem)] bg-slate-50 p-2">
+        {% block aside_navigation %}
           {% include "home/aside.html" %}
-      {% endblock aside_navigation %}
-
-      
-      <div class="content-wrapper">
-          {% block content %}
-            <!-- {{ content }} -->
-          {% endblock content %}
-      </div>
-
-
-      {% block footer %}
-        <footer>
-          {% include "home/footer.html" %}
-        </footer>
-      {% endblock footer %}
-
-
-</div>
+        {% endblock aside_navigation %}
+      </aside>
+  
+      <!-- Content Wrapper -->
+      <main id="mainContent" class="flex-grow p-2 ml-64 h-[calc(100vh-4rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+        {% block content %}
+          <!-- {{ content }} -->
+        {% endblock content %}
+      </main>
+    </div>
+  </div>
+  
 <!-- ./wrapper -->
 
 
 
 {% block javascripts %}
 
+<script>
+  const toggleSidebarButton = document.getElementById("toggleSidebar");
+  const sidebar = document.getElementById("sidebar");
+  const mainContent = document.getElementById("mainContent");
+
+  toggleSidebarButton.addEventListener("click", () => {
+    const isHidden = sidebar.classList.contains("-translate-x-full");
+
+    if (isHidden) {
+      // Show the sidebar smoothly
+      sidebar.classList.remove("-translate-x-full");
+      sidebar.classList.add("translate-x-0");  // Reset to original position
+      sidebar.classList.add("transition-transform", "duration-300");  // Apply smooth transition
+      
+      mainContent.classList.remove("ml-0");
+      mainContent.classList.add("ml-64");
+    } else {
+      // Hide the sidebar smoothly
+      sidebar.classList.remove("translate-x-0");
+      sidebar.classList.add("-translate-x-full");  // Move sidebar out of view
+      sidebar.classList.add("transition-transform", "duration-300");  // Apply smooth transition
+      
+      mainContent.classList.remove("ml-64");
+      mainContent.classList.add("ml-0");
+    }
+  });
+</script>
+
+
 <!-- jQuery -->
 <script src="/static/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+{% comment %} <script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> {% endcomment %}
 <!-- Select2 -->
 <script src="/static/plugins/select2/js/select2.full.min.js"></script>
 <!-- DataTables  & Plugins -->
+<script src="/static/sidebar-script.js"></script>
 <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="/static/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="/static/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -101,7 +133,6 @@
 <script src="/static/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="/static/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="/static/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
 <!-- AdminLTE App -->
 <script src="/static/dist/js/adminlte.min.js"></script>
 
@@ -128,11 +159,30 @@
   });
 </script>
 
+<script>
+  const toggleButton = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.querySelector('main');
+
+  toggleButton.addEventListener('click', () => {
+    // Toggle hidden class on sidebar
+    sidebar.classList.toggle('-translate-x-full'); // Moves the sidebar out of view
+    mainContent.classList.toggle('ml-64'); // Adjusts main content margin
+    mainContent.classList.toggle('ml-0'); // When sidebar is hidden
+  });
+</script>
+
+
+
 <!-- jQuery Knob -->
 <script src="/static/plugins/jquery-knob/jquery.knob.min.js"></script>
 
 <!-- Last release ECharts -->
 <script src="/static/echarts.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         
 
 {% endblock javascripts%}

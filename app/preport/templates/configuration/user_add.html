@@ -5,72 +5,53 @@
 
 {% block content %}
 
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>{% translate "Add User" %}</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/">{% translate "Home" %}</a></li>
-            </ol>
-          </div>
+
+          <div class="flex justify-between w-full bg-indigo-500 border px-6 py-2 rounded-xl mb-2">
+            <div class="font-poppins text-slate-50 text-2xl">{% translate "Add User" %}</div>
+          <div class="breadcrumbs text-sm font-poppins ">
+              <div class="breadcrumb-item text-slate-50"><a href="/" class=" text-slate-50">{% translate "Home" %}</a></div>
+          </div> 
         </div>
-      </div>
-    </section>
 
+    <div class="card rounded-lg bg-base-100 shadow-xl">
+      <div class="card-body">
 
-<section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
+        <h3 class="card-title font-poppins">{% translate "User details" %}</h3>
 
-            <div class="card card-outline card-primary">
-              <div class="card-header">
-                <h3 class="card-title">{% translate "User details" %}</h3>
-              </div>
+        
+        <form role="form" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
 
-                  <form role="form" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-
-                    <div class="card-body">
-                    {% for field in form %}
-
-                        <div class="form-group row">
-                          <label class="col-sm-2 col-form-label">{{ field.label_tag }} </label>
-                            <div class="col-md-10 col-sm-10 col-xs-12">
-                              {{ field }}
-                            </div>
-
-                            {% if field.help_text %}
-                              <small style="color: grey">{{ field.help_text }}</small>
-                            {% endif %}
-
-                            {% for error in field.errors %}
-                              <p style="color: red">{{ error }}</p>
-                              <br>
-                            {% endfor %}
-
-                        </div>
-
-                {% endfor %}
-
+          <div class="card-body">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {% for field in form %}
+                <div class="form-group">
+                  <label class="label">
+                    <span class="label-text">{{ field.label_tag }}</span>
+                  </label>
+                  <div class="col-span-1">
+                    {{ field }}
                   </div>
-
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">{% translate "Save User" %}</button>
+          
+                  {% if field.help_text %}
+                    <small class="text-gray-500">{{ field.help_text }}</small>
+                  {% endif %}
+          
+                  {% for error in field.errors %}
+                    <p class="text-red-500">{{ error }}</p>
+                    <br>
+                  {% endfor %}
                 </div>
-              </form>
-
+              {% endfor %}
+            </div>
           </div>
-
-        </div>
+          
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary font-poppins text-base">{% translate "Save User" %}</button>
+      </div>
+    </form>
       </div>
     </div>
-</section>
-
-
 
 {% endblock %}
 

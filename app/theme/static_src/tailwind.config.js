@@ -43,21 +43,6 @@ module.exports = {
     ],
     theme: {
         extend: {
-            scrollbar: {
-                thin: {
-                    '&::-webkit-scrollbar': {
-                        width: '1px',
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                        background: '#cbd5e0',
-                        borderRadius: '999px',
-                    },
-                    '&::-webkit-scrollbar-track': {
-                        background: '#f7fafc',
-                    },
-                },
-            },
-
             fontFamily:{
                 sans: ["Poppins", "sans-serif"],
                 poppins:["Poppins", "sans-serif"],
@@ -75,6 +60,6 @@ module.exports = {
         require('@tailwindcss/line-clamp'),
         require('@tailwindcss/aspect-ratio'),
         require('daisyui'),
-        require('tailwind-scrollbar'),
+        require('tailwind-scrollbar')({ nocompatible: true }),
     ],
 }

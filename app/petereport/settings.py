@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from django.utils.translation import gettext_lazy as _
-
+from shutil import which
 from pathlib import Path
 import time
 import os
@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = DJANGO_CONFIG['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = DJANGO_CONFIG['debug']
+DEBUG = True
 
 ADMIN_ENABLED = DJANGO_CONFIG['admin_module']
 
@@ -48,7 +48,18 @@ INSTALLED_APPS = [
     'martor',
     'django_bleach',
     'preport',
+    'tailwind',
+    'django_browser_reload',
+    'theme',
 ]
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'petereport.urls'
